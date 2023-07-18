@@ -17,26 +17,28 @@
         </div>
         <div class="card-footer">
           <span>{{todo.date + " " + todo.time}}</span>
-          <button class="custom_button" (click)="onEdit(todo.id)"><fa-icon [icon]="faPenToSquare" size="lg"></fa-icon></button>
+          <button class="custom_button" (click)="onEdit(todo)"><fa-icon [icon]="faPenToSquare" size="lg"></fa-icon></button>
           <button class="custom_button" (click)="onDelete(todo.id)"><fa-icon [icon]="faTrashCan" size="lg"></fa-icon></button>
         </div>
       </div>
 
-<!-- Modal -->
-<span *ngIf="addEditDialog">
+<app-add-edit-todo [showAddEditModal]="showAddEditModal" [todo]="currentTodo" (onClose)="addEditOnClose($event)"></app-add-edit-todo>
+
+<!-- settings modal -->
+<span *ngIf="showSettingsModal">
   <div class="modal fade show" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: block !important;">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="addEditOnClose(false)"></button>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Settings</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="settingsOnClose(false)"></button>
         </div>
         <div class="modal-body">
           ...
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="addEditOnClose(false)" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="addEditOnClose(true)">Save changes</button>
+          <button type="button" class="btn btn-secondary" (click)="settingsOnClose(false)" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="settingsOnClose(true)">Save changes</button>
         </div>
       </div>
     </div>

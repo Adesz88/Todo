@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MainComponent } from './main/main.component';
+import { AddEditTodoComponent } from './add-edit-todo/add-edit-todo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
-    MainComponent
+    MainComponent,
+    AddEditTodoComponent
   ],
   imports: [
     BrowserModule,

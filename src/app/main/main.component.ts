@@ -13,7 +13,9 @@ export class MainComponent {
   faTrashCan = faTrashCan;
   faPenToSquare = faPenToSquare;
   todos?: Todo[];
-  addEditDialog: boolean = false;
+  currentTodo?: Todo = undefined;
+  showAddEditModal: boolean = false;
+  showSettingsModal: boolean = false;
 
   constructor(private categoryService: CategoryService, private todoService: TodoService) {
     let categories = categoryService.getAll();
@@ -23,9 +25,10 @@ export class MainComponent {
     console.log(this.todos);
   }
 
-  onEdit(id: number) {
-    console.log("edit" + id);
-    this.addEditDialog = true;
+  onEdit(todo: Todo) {
+    console.log("edit" + todo.id);
+    this.currentTodo = todo;
+    this.showAddEditModal = true;
   }
 
   onDelete(id: number) {
@@ -34,7 +37,11 @@ export class MainComponent {
     this.todos = this.todoService.getAll();
   }
 
-  addEditOnClose(save: boolean) {
-    this.addEditDialog = false;
+  addEditOnClose(refresh: boolean) {
+    this.showAddEditModal = false;
+  }
+
+  settingsOnClose(save: boolean) {
+    this.showSettingsModal = false;
   }
 }
