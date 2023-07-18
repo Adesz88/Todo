@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { Category } from '../shared/models/Category';
+import { CategoryService } from '../shared/services/category.service';
+import { TodoService } from '../shared/services/todo.service';
+import { Todo } from '../shared/models/Todo';
+import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-main',
@@ -7,26 +10,31 @@ import { Category } from '../shared/models/Category';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
-  readonly BUILTIN_CATEGORIES: Category[] = [
-    {
-      name: "Expired",
-      color: "danger"
-    },
-    {
-      name: "Personal",
-      color: "warning",
-    },
-    {
-      name: "Work",
-      color: "info"
-    },
-    {
-      name: "Indoor",
-      color: "secondary"
-    },
-    {
-      name: "Outdoor",
-      color: "success"
-    }
-  ]
+  faTrashCan = faTrashCan;
+  faPenToSquare = faPenToSquare;
+  todos?: Todo[];
+  addEditDialog: boolean = false;
+
+  constructor(private categoryService: CategoryService, private todoService: TodoService) {
+    let categories = categoryService.getAll();
+    console.log(categories);
+    //todoService.addBuiltIn();
+    this.todos = todoService.getAll();
+    console.log(this.todos);
+  }
+
+  onEdit(id: number) {
+    console.log("edit" + id);
+    this.addEditDialog = true;
+  }
+
+  onDelete(id: number) {
+    console.log("delete" + id);
+    this.todoService.delete(id);
+    this.todos = this.todoService.getAll();
+  }
+
+  addEditOnClose(save: boolean) {
+    this.addEditDialog = false;
+  }
 }

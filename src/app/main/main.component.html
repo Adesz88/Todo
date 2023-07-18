@@ -1,7 +1,49 @@
-<div class="card">
+<div class="card" id="main_content">
     <div class="card-body">
       <h5 class="card-title">Card title</h5>
       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      
+      <div class="card" *ngFor="let todo of todos">
+        <div class="card-body">
+          <h5 class="card-title">{{todo.title}}</h5>
+          <p class="card-text">{{todo.id}}</p>
+          <p class="card-text">{{todo.details}}</p>
+          <div class="list-group" *ngFor="let subtask of todo.subtasks">
+            <label class="list-group-item d-flex gap-2">
+              <input class="form-check-input flex-shrink-0" type="checkbox" value="" [checked]="subtask.finished">
+              <span>{{subtask.name}}</span>
+            </label>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>{{todo.date + " " + todo.time}}</span>
+          <button class="custom_button" (click)="onEdit(todo.id)"><fa-icon [icon]="faPenToSquare" size="lg"></fa-icon></button>
+          <button class="custom_button" (click)="onDelete(todo.id)"><fa-icon [icon]="faTrashCan" size="lg"></fa-icon></button>
+        </div>
+      </div>
+
+<!-- Modal -->
+<span *ngIf="addEditDialog">
+  <div class="modal fade show" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: block !important;">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="addEditOnClose(false)"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="addEditOnClose(false)" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="addEditOnClose(true)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+</span>
+
     </div>
   </div>
 
