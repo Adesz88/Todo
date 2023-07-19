@@ -7,6 +7,6 @@ export interface Todo {
     date: Date,
     time?: string,
     details: string,
-    subtasks?: Subtask[],
+    subtasks: Subtask[],
     categories: Category[]
 }
