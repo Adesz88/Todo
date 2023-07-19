@@ -25,6 +25,11 @@ export class MainComponent {
     console.log(this.todos);
   }
 
+  onNew() {
+    this.currentTodo = undefined;
+    this.showAddEditModal = true;
+  }
+
   onEdit(todo: Todo) {
     console.log("edit" + todo.id);
     this.currentTodo = todo;
@@ -39,6 +44,7 @@ export class MainComponent {
 
   addEditOnClose(refresh: boolean) {
     this.showAddEditModal = false;
+    this.todos = this.todoService.getAll();
   }
 
   settingsOnClose(save: boolean) {

@@ -10,12 +10,16 @@
           <div class="modal-body">
             <form action="">
               <label for="title" class="form-label">Title</label>
-              <input type="text" class="form-control" id="title">
+              <input type="text" class="form-control" id="title" [formControl]="title">
               <label for="date" class="form-label">Date</label>
-              <input type="date" class="form-control" id="date">
-              <input type="time" class="form-control" id="date">
+              <span id="date">
+                <input type="date" class="form-control" [formControl]="date">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                  (click)="onCheckClick()" [formControl]="checkbox">
+                <input type="time" id="time" class="form-control" [formControl]="time">
+              </span>
               <label for="details" class="form-label">Details</label>
-              <textarea class="form-control" id="details" rows="3"></textarea>
+              <textarea class="form-control" id="details" rows="3" [formControl]="details"></textarea>
             </form>
           </div>
           <div class="modal-footer">

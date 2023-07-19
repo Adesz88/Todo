@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MainComponent } from './main/main.component';
 import { AddEditTodoComponent } from './add-edit-todo/add-edit-todo.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AddEditTodoComponent } from './add-edit-todo/add-edit-todo.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

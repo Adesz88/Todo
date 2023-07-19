@@ -12,6 +12,7 @@ export class TodoService {
       title: "Coffee with Olivia",
       date: new Date("2023-07-18T18:14:50.941Z"),
       details: "Cafe Frei at Balaton st.",
+      time: "21:30",
       categories: [
         {
           name: "Personal",
@@ -61,12 +62,12 @@ export class TodoService {
 
   constructor(private categoryService: CategoryService) { }
 
-  add() {
+  add(title: string, date: string, details: string, time?: string) {
     let newTodo: Todo = {
       id: new Date().getTime(),
-      title: "new todo",
-      date: new Date(),
-      details: "",
+      title: title,
+      date: new Date(date),
+      details: details,
       categories: [this.categoryService.getAll()[0]]
     };
     let todos: Todo[] = [];
