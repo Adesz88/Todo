@@ -6,33 +6,25 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="#" class="nav-link active" aria-current="page">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-          Home
+        <a class="nav-link active">
+          All
         </a>
       </li>
-      <li>
-        <a href="#" class="nav-link link-body-emphasis">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-          Dashboard
+      <li class="nav-item">
+        <a class="nav-link inactive">
+          Expired
+          <span class="badge rounded-pill text-bg-danger">2</span>
         </a>
       </li>
-      <li>
-        <a href="#" class="nav-link link-body-emphasis">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-          Orders
+      <li class="nav-item">
+        <a class="nav-link inactive">
+          Completed
         </a>
       </li>
-      <li>
-        <a href="#" class="nav-link link-body-emphasis">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-          Products
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link link-body-emphasis">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-          Customers
+      <li *ngFor="let category of categories" class="nav-item">
+        <a class="nav-link inactive">
+          {{category.name}}
+          <span class="badge rounded-pill text-bg-{{category.color}}">2</span>
         </a>
       </li>
     </ul>

@@ -109,7 +109,8 @@ export class AddEditTodoComponent implements OnInit, OnChanges{
           date: new Date(date),
           subtasks: subtasksToSave,
           details: details === null ? "" : details,
-          categories: categoriesToSave
+          categories: categoriesToSave,
+          completed: false
         };
 
         if (time) {

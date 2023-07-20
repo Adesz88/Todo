@@ -7,7 +7,8 @@
       <!-- todos -->
       <div class="card" *ngFor="let todo of todos">
         <div class="card-body">
-          <h5 class="card-title">{{todo.title}}</h5>
+          <input class="form-check-input flex-shrink-0" type="checkbox" (click)="onTodoCheck(todo)" [checked]="todo.completed">
+          <h5 class="card-title todo_title">{{todo.title}}</h5>
           <p class="card-text">{{todo.id}}</p>
           <p class="card-text">{{todo.details}}</p>
 
@@ -20,12 +21,9 @@
             </label>
           </div>
 
-          <div>
-            <span *ngFor="let category of todo.categories">{{category.name + " "}}</span>
-          </div>
-
         </div>
         <div class="card-footer">
+          <span><span *ngFor="let category of todo.categories" class="badge rounded-pill text-bg-{{category.color}}">{{category.name}}</span></span>
           <span>{{todo.date}}</span>
           <span>{{todo.time}}</span>
           <button class="custom_button" (click)="onEdit(todo)"><fa-icon [icon]="faPenToSquare" size="lg"></fa-icon></button>

@@ -8,5 +8,6 @@ export interface Todo {
     time?: string,
     details: string,
     subtasks: Subtask[],
-    categories: Category[]
+    categories: Category[],
+    completed: boolean
 }

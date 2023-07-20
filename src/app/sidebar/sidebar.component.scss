@@ -1,5 +1,9 @@
 #sidebar {
     width: 280px;
-    height: 100vh;
+    height: 95vh;
     background-color: rgba($color: #ffffff, $alpha: 0.8) !important;
+}
+
+.inactive {
+    background-color: #ffffff;
 }

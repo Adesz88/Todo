@@ -20,7 +20,8 @@ export class TodoService {
           name: "Personal",
           color: "warning"
         }
-      ]
+      ],
+      completed: false
     },
     {
       id: 1689678903073,
@@ -46,7 +47,8 @@ export class TodoService {
           name: "Personal",
           color: "warning"
         }
-      ]
+      ],
+      completed: false
     },
     {
       id: 1689678910523,
@@ -59,7 +61,8 @@ export class TodoService {
           name: "Personal",
           color: "warning"
         }
-      ]
+      ],
+      completed: false
     }
   ]
 

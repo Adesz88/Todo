@@ -25,6 +25,12 @@ export class MainComponent {
     console.log(this.todos);
   }
 
+  onTodoCheck(todo: Todo) {
+    todo.completed = !todo.completed;
+    this.todoService.update(todo);
+    this.todos = this.todoService.getAll();
+  }
+
   onSubtaskCheck(todo: Todo, index: number) {
     todo.subtasks[index].finished = !todo.subtasks[index].finished;
     this.todoService.update(todo);
