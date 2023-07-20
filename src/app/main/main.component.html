@@ -1,7 +1,8 @@
 <div class="card" id="main_content">
     <div class="card-body">
       <h5 class="card-title">Card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <p class="card-text">{{weather.current.temp + "C, " + weather.current.sky}}</p>
+      <p *ngFor="let forecast of weather.daily" class="card-text">{{forecast.dt + " " + forecast.temp + "C, " + forecast.sky}}</p>
       <button type="button" class="btn btn-primary" (click)="onNew()">new</button>
       
       <!-- todos -->
@@ -29,7 +30,7 @@
         <!-- footer -->
         <div class="card-footer">
           <span><span *ngFor="let category of todo.categories" class="badge rounded-pill text-bg-{{category.color}}">{{category.name}}</span></span>
-          <span>{{todo.date}}</span>
+          <span>{{todo.date | dateFormat}}</span>
           <span>{{todo.time}}</span>
           <button class="custom_button" (click)="onEdit(todo)"><fa-icon [icon]="faPenToSquare" size="lg"></fa-icon></button>
           <button class="custom_button" (click)="onDelete(todo.id)"><fa-icon [icon]="faTrashCan" size="lg"></fa-icon></button>

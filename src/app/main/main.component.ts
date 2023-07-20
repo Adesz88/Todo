@@ -3,7 +3,8 @@ import { CategoryService } from '../shared/services/category.service';
 import { TodoService } from '../shared/services/todo.service';
 import { Todo } from '../shared/models/Todo';
 import { faTrashCan, faPenToSquare} from '@fortawesome/free-solid-svg-icons';
-import { Subscription, map, timer } from 'rxjs';
+import { Observable, Subscription, map, timer } from 'rxjs';
+import { WeatherService } from '../shared/services/weather.service';
 
 @Component({
   selector: 'app-main',
@@ -21,8 +22,59 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy{
   showSettingsModal: boolean = false;
 
   timerSubscription: Subscription = new Subscription;
+  weatherSubscription: Subscription = new Subscription;
 
-  constructor(private categoryService: CategoryService, private todoService: TodoService) {
+  weather = {
+    current: {
+      temp: 0,
+      sky: ""
+    },
+    daily: [
+      {
+        temp: 0,
+        sky: "Clouds",
+        dt: 0,
+      },
+      {
+        temp: 0,
+        sky: "Clouds",
+        dt: 0,
+      },
+      {
+        temp: 0,
+        sky: "Clouds",
+        dt: 0,
+      },
+      {
+        temp: 0,
+        sky: "Clouds",
+        dt: 0,
+      },
+      {
+        temp: 0,
+        sky: "Clouds",
+        dt: 0,
+      },
+      {
+        temp: 0,
+        sky: "Clouds",
+        dt: 0,
+      },
+      {
+        temp: 0,
+        sky: "Clouds",
+        dt: 0,
+      },
+      {
+        temp: 0,
+        sky: "Clouds",
+        dt: 0,
+      }
+    ]
+  }
+
+  constructor(private categoryService: CategoryService, private todoService: TodoService,
+    private weatherService: WeatherService) {
     let categories = categoryService.getAll();
     console.log(categories);
     //todoService.addBuiltIn();
@@ -37,6 +89,20 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy{
         console.log(new Date);
       })
     ).subscribe();
+
+    this.weatherSubscription = this.weatherService.get().subscribe({next: (response: any) => {
+      console.log(response);
+      this.weather.current.temp = response.current.temp;
+      this.weather.current.sky = response.current.weather[0].main;
+
+      for (let i = 0; i < 8; i++) {
+        this.weather.daily[i].temp = response.daily[i].temp.day;
+        this.weather.daily[i].sky = response.daily[i].weather[0].main;
+        this.weather.daily[i].dt = response.daily[i].dt;
+      }
+    }, error: (error) => {
+      console.log('err');
+    }});
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -45,6 +111,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.timerSubscription.unsubscribe();
+    this.weatherSubscription.unsubscribe();
   }
 
   onTodoCheck(todo: Todo) {
@@ -90,10 +157,10 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy{
     if (todoDate.getFullYear() < now.getFullYear()) { return true; }
     if (todoDate.getFullYear() === now.getFullYear() && todoDate.getMonth() < now.getMonth()) { return true; }
     if (todoDate.getFullYear() === now.getFullYear() && todoDate.getMonth() === now.getMonth()
-        && todoDate.getDay() < now.getDay()) { return true; }
+        && todoDate.getDate() < now.getDate()) { return true; }
     
     if (todoDate.getFullYear() === now.getFullYear() && todoDate.getMonth() === now.getMonth()
-        && todoDate.getDay() === now.getDay() && todo.time) {
+        && todoDate.getDate() === now.getDate() && todo.time) {
 
       const todoHours = Number(todo.time?.substring(0, 2));
       const todoMinutes = Number(todo.time?.substring(3, 5));
