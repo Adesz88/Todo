@@ -1,6 +1,6 @@
 <div id="background">
-  <app-sidebar></app-sidebar>
-  <app-main></app-main>
+  <app-sidebar (onFilter)="onFilter($event)"></app-sidebar>
+  <app-main [filter]="filter"></app-main>
 </div>
 
 <router-outlet></router-outlet>

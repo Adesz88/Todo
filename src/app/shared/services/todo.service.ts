@@ -86,8 +86,29 @@ export class TodoService {
     localStorage.setItem("todos", JSON.stringify(this.BUILT_IN_TODOS));
   }
 
-  getAll() {
-    return JSON.parse(String(localStorage.getItem("todos")));
+  getAll(filter: string) {
+    let todos: Todo[] = JSON.parse(String(localStorage.getItem("todos")));
+    switch (filter) {
+      case "all":
+        return todos.filter(x => !x.completed);
+
+      case "completed":
+        return todos.filter(x => x.completed);
+
+      default:
+        return todos.filter(x => {
+          if (x.categories.findIndex((x) => x.name === filter) > -1) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+    }
+  }
+
+  getCompleted() {
+    let todos: Todo[] = JSON.parse(String(localStorage.getItem("todos")));
+    return todos.filter(x => !x.completed);
   }
 
   update(modifiedTodo: Todo) {

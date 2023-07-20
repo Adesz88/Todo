@@ -1,4 +1,4 @@
-import { Component, numberAttribute } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, numberAttribute } from '@angular/core';
 import { CategoryService } from '../shared/services/category.service';
 import { TodoService } from '../shared/services/todo.service';
 import { Todo } from '../shared/models/Todo';
@@ -9,7 +9,9 @@ import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent {
+export class MainComponent implements OnChanges{
+  @Input() filter: string = "all";
+
   faTrashCan = faTrashCan;
   faPenToSquare = faPenToSquare;
   todos?: Todo[];
@@ -21,20 +23,24 @@ export class MainComponent {
     let categories = categoryService.getAll();
     console.log(categories);
     //todoService.addBuiltIn();
-    this.todos = todoService.getAll();
+    this.todos = todoService.getAll(this.filter);
     console.log(this.todos);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.todos = this.todoService.getAll(this.filter);
   }
 
   onTodoCheck(todo: Todo) {
     todo.completed = !todo.completed;
     this.todoService.update(todo);
-    this.todos = this.todoService.getAll();
+    this.todos = this.todoService.getAll(this.filter);
   }
 
   onSubtaskCheck(todo: Todo, index: number) {
     todo.subtasks[index].finished = !todo.subtasks[index].finished;
     this.todoService.update(todo);
-    this.todos = this.todoService.getAll();
+    this.todos = this.todoService.getAll(this.filter);
   }
 
   onNew() {
@@ -51,12 +57,12 @@ export class MainComponent {
   onDelete(id: number) {
     console.log("delete" + id);
     this.todoService.delete(id);
-    this.todos = this.todoService.getAll();
+    this.todos = this.todoService.getAll(this.filter);
   }
 
   addEditOnClose(refresh: boolean) {
     this.showAddEditModal = false;
-    this.todos = this.todoService.getAll();
+    this.todos = this.todoService.getAll(this.filter);
   }
 
   settingsOnClose(save: boolean) {

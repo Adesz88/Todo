@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CategoryService } from '../shared/services/category.service';
 import { Category } from '../shared/models/Category';
 
@@ -8,6 +8,8 @@ import { Category } from '../shared/models/Category';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit{
+  @Output() onFilter: EventEmitter<string> = new EventEmitter();
+
   categories: Category[] = [];
 
   constructor(private categoryService: CategoryService) { }

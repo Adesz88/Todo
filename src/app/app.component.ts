@@ -9,4 +9,10 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 export class AppComponent {
   title = 'Todo';
   faCoffee = faCoffee;
+  filter: string = "all";
+
+  onFilter(filter: string) {
+    console.log(filter);
+    this.filter = filter;
+  }
 }
