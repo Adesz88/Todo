@@ -30,6 +30,13 @@
                 <button type="button" class="custom_button" (click)="onNewSubtask()"><fa-icon [icon]="faCirclePlus" size="lg"></fa-icon></button>
               </span>
 
+              <!-- categories -->
+              <select class="form-select" multiple [formControl]="categorySelect">
+                <option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</option>
+              </select>
+
+              <div *ngIf="missingFields" class="alert alert-danger" role="alert">Missing fields</div>
+
             </form>
           </div>
           <div class="modal-footer">

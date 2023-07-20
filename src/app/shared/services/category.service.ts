@@ -7,10 +7,6 @@ import { Category } from '../models/Category';
 export class CategoryService {
   private readonly BUILT_IN_CATEGORIES: Category[] = [
     {
-      name: "Expired",
-      color: "danger"
-    },
-    {
       name: "Personal",
       color: "warning",
     },
@@ -32,5 +28,10 @@ export class CategoryService {
 
   getAll() {
     return this.BUILT_IN_CATEGORIES;
+  }
+
+  get(name: string) {
+    let index: number = this.BUILT_IN_CATEGORIES.findIndex((x) => x.name === name);
+    return this.BUILT_IN_CATEGORIES[index];
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, numberAttribute } from '@angular/core';
 import { CategoryService } from '../shared/services/category.service';
 import { TodoService } from '../shared/services/todo.service';
 import { Todo } from '../shared/models/Todo';
@@ -23,6 +23,12 @@ export class MainComponent {
     //todoService.addBuiltIn();
     this.todos = todoService.getAll();
     console.log(this.todos);
+  }
+
+  onSubtaskCheck(todo: Todo, index: number) {
+    todo.subtasks[index].finished = !todo.subtasks[index].finished;
+    this.todoService.update(todo);
+    this.todos = this.todoService.getAll();
   }
 
   onNew() {

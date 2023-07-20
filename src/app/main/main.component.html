@@ -4,20 +4,30 @@
       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
       <button type="button" class="btn btn-primary" (click)="onNew()">new</button>
       
+      <!-- todos -->
       <div class="card" *ngFor="let todo of todos">
         <div class="card-body">
           <h5 class="card-title">{{todo.title}}</h5>
           <p class="card-text">{{todo.id}}</p>
           <p class="card-text">{{todo.details}}</p>
-          <div class="list-group" *ngFor="let subtask of todo.subtasks">
+
+          <!-- subtasks -->
+          <div class="list-group" *ngFor="let subtask of todo.subtasks; index as index">
             <label class="list-group-item d-flex gap-2">
-              <input class="form-check-input flex-shrink-0" type="checkbox" value="" [checked]="subtask.finished">
+              <input class="form-check-input flex-shrink-0" type="checkbox" (click)="onSubtaskCheck(todo, index)"
+                [checked]="subtask.finished">
               <span>{{subtask.name}}</span>
             </label>
           </div>
+
+          <div>
+            <span *ngFor="let category of todo.categories">{{category.name + " "}}</span>
+          </div>
+
         </div>
         <div class="card-footer">
-          <span>{{todo.date + " " + todo.time}}</span>
+          <span>{{todo.date}}</span>
+          <span>{{todo.time}}</span>
           <button class="custom_button" (click)="onEdit(todo)"><fa-icon [icon]="faPenToSquare" size="lg"></fa-icon></button>
           <button class="custom_button" (click)="onDelete(todo.id)"><fa-icon [icon]="faTrashCan" size="lg"></fa-icon></button>
         </div>

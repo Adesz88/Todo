@@ -1,17 +1,18 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Todo } from '../shared/models/Todo';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { TodoService } from '../shared/services/todo.service';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faL } from '@fortawesome/free-solid-svg-icons';
 import { Subtask } from '../shared/models/Subtask';
 import { CategoryService } from '../shared/services/category.service';
+import { Category } from '../shared/models/Category';
 
 @Component({
   selector: 'app-add-edit-todo',
   templateUrl: './add-edit-todo.component.html',
   styleUrls: ['./add-edit-todo.component.scss']
 })
-export class AddEditTodoComponent implements OnChanges{
+export class AddEditTodoComponent implements OnInit, OnChanges{
   @Input() showAddEditModal: boolean = false;
   @Input() todo?: Todo;
   @Output() onClose: EventEmitter<boolean> = new EventEmitter();
@@ -21,27 +22,31 @@ export class AddEditTodoComponent implements OnChanges{
   checkbox = new FormControl("");
   time = new FormControl({value: "", disabled: true});
   details = new FormControl("");
+  categorySelect = new FormControl([""]);
   subtasks: FormArray<FormControl> = new FormArray([new FormControl("")]);
 
+  categories: Category[] = [];
   disableTimeInput: boolean = false;
-
+  missingFields: boolean = false;
   faCirclePlus = faCirclePlus;
 
   constructor(private todoService: TodoService, private categoryService: CategoryService) { }
+
+  ngOnInit(): void {
+    this.categories = this.categoryService.getAll();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     // set values on open
     if (this.showAddEditModal && this.todo !== undefined) {
       this.title.setValue(this.todo.title);
-      //console.log(new Date(this.todo.date).toLocaleDateString());
-      console.log(this.todo.date);
-      console.log({date: new Date("2023-07-18T18:14:50.941Z")});
+      let dateStr = this.todo.date.toString().substring(0, 10);
+      this.date.setValue(dateStr);
       if (this.todo.time !== undefined) {
         this.time.setValue(this.todo.time);
         this.time.enable();
         this.checkbox.setValue("checked");
       }
-      console.log(this.todo.time);
       this.details.setValue(this.todo.details);
       if (this.todo.subtasks.length > 0) {
         this.subtasks.controls[0].setValue(this.todo.subtasks[0].name);
@@ -51,19 +56,28 @@ export class AddEditTodoComponent implements OnChanges{
         }
       }
 
+      this.categorySelect.setValue([]);
+      for (let cat of this.todo.categories) {
+        this.categorySelect.value?.push(cat.name);
+      }
+
     } else if (this.todo === undefined) {
       // clear form
       this.title.setValue("");
       this.date.setValue("");
+      let currentDate = new Date;
+      this.date.setValue(currentDate.toISOString().substring(0, 10));
       this.checkbox.setValue("");
       this.time.disable();
       this.time.setValue("");
       this.details.setValue("");
+      this.categorySelect.setValue([]);
     }
   }
 
   addEditOnClose(save: boolean) {
     if (save) {
+      console.log(this.categorySelect.value?.length);
       console.log(this.title.value);
       console.log(this.date.value);
       console.log(this.time.value);
@@ -71,21 +85,31 @@ export class AddEditTodoComponent implements OnChanges{
       let date = this.date.value;
       let time = this.time.value;
       let details = this.details.value;
-      let subtasksToSave: Subtask[] = [];
+      let selectedCategories = this.categorySelect.value;
+      console.log(selectedCategories);
 
-      for (let control of this.subtasks.controls) {
-        subtasksToSave.push({name: control.value, finished:false});
-      }
-      console.log(subtasksToSave);
+      // check required fields
+      if (title && date && selectedCategories && selectedCategories.length) {
+        // save subtasks that not empty
+        let subtasksToSave: Subtask[] = [];
+        for (let control of this.subtasks.controls) {
+          if (control.value !== "") {
+            subtasksToSave.push({name: control.value, finished:false});
+          }
+        }
 
-      if (title && date && details) {
+        let categoriesToSave: Category[] = [];
+        for (let selectedCategory of selectedCategories){
+          categoriesToSave.push(this.categoryService.get(selectedCategory));
+        }
+
         let newTodo: Todo = {
           id: 0,
           title: title,
           date: new Date(date),
           subtasks: subtasksToSave,
-          details: details,
-          categories: [this.categoryService.getAll()[0]]
+          details: details === null ? "" : details,
+          categories: categoriesToSave
         };
 
         if (time) {
@@ -99,11 +123,20 @@ export class AddEditTodoComponent implements OnChanges{
         } else {
           this.todoService.add(newTodo);
         }
-      }
-    }
 
+        this.closeModal();
+      } else {
+        this.missingFields = true;
+      }
+    } else {
+      this.closeModal();
+    }    
+  }
+
+  closeModal() {
     this.subtasks = new FormArray([new FormControl("")]);
     this.showAddEditModal = false;
+    this.missingFields = false;
     this.onClose.emit(false);
   }
 
