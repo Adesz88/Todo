@@ -21,7 +21,12 @@
             </label>
           </div>
 
+          <div *ngIf="isExpired(todo)" class="alert alert-danger" role="alert">
+            This todo is expired
+          </div>
         </div>
+
+        <!-- footer -->
         <div class="card-footer">
           <span><span *ngFor="let category of todo.categories" class="badge rounded-pill text-bg-{{category.color}}">{{category.name}}</span></span>
           <span>{{todo.date}}</span>
