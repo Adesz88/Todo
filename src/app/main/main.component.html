@@ -2,40 +2,42 @@
     <div class="card-body">
 
       <div class="header">
-        <span>
-          <h5 class="card-title">Budapest</h5>
-          <img src="/assets/5.png" style="width: 80px;">
-          <div class="card-text">{{weather.current.temp + "C, " + weather.current.sky}}</div>
-          <button type="button" class="btn btn-primary new_button" (click)="onNew()">New</button>
-        </span>
+        <div class="header_flex">
+          <img src="assets/{{getWeatherImg(weather.current.sky)}}">
+          <span>
+            <h5 class="card-title">Budapest</h5>
+            <h5 class="card-title">{{weather.current.temp + "°C "}}</h5>
+            <button type="button" class="btn btn-primary new_button" (click)="onNew()">New</button>
+          </span>
+        </div>
         
         <div class="weather_flex">
           <span *ngFor="let forecast of weather.daily" class="card-text">
             <div>{{getDayName(forecast.dt)}}</div>
-            <div>{{forecast.sky}}</div>
-            <div>{{forecast.temp + "C, "}}</div>
+            <img src="assets/{{getWeatherImg(forecast.sky)}}" alt="">
+            <div>{{forecast.temp + "°C"}}</div>
           </span>
         </div>
       </div>
-      
       
       <!-- todos -->
       <div class="card todo_card" *ngFor="let todo of todos">
         <div class="card-body">
           <input class="form-check-input flex-shrink-0" type="checkbox" (click)="onTodoCheck(todo)" [checked]="todo.completed">
           <h5 class="card-title todo_title">{{todo.title}}</h5>
-          <p class="card-text">{{todo.id}}</p>
-          <p class="card-text">{{todo.details}}</p>
 
-          <!-- subtasks -->
-          <div class="list-group" *ngFor="let subtask of todo.subtasks; index as index">
-            <label class="list-group-item d-flex gap-2">
-              <input class="form-check-input flex-shrink-0" type="checkbox" (click)="onSubtaskCheck(todo, index)"
-                [checked]="subtask.finished">
-              <span>{{subtask.name}}</span>
-            </label>
+          <div class="todo_details">
+            <p class="card-text">{{todo.details}}</p>
+            <!-- subtasks -->
+            <div class="list-group" *ngFor="let subtask of todo.subtasks; index as index">
+              <label class="list-group-item d-flex gap-2">
+                <input class="form-check-input flex-shrink-0" type="checkbox" (click)="onSubtaskCheck(todo, index)"
+                  [checked]="subtask.finished">
+                <span>{{subtask.name}}</span>
+              </label>
+            </div>
           </div>
-
+          
           <div *ngIf="isExpired(todo)" class="alert alert-danger" role="alert">
             This todo is expired
           </div>
@@ -43,37 +45,22 @@
 
         <!-- footer -->
         <div class="card-footer">
-          <span><span *ngFor="let category of todo.categories" class="badge rounded-pill text-bg-{{category.color}}">{{category.name}}</span></span>
-          <span>{{todo.date | dateFormat}}</span>
-          <span>{{todo.time}}</span>
-          <button class="custom_button" (click)="onEdit(todo)"><fa-icon [icon]="faPenToSquare" size="lg"></fa-icon></button>
-          <button class="custom_button" (click)="onDelete(todo.id)"><fa-icon [icon]="faTrashCan" size="lg"></fa-icon></button>
+          <span>
+            <span *ngFor="let category of todo.categories" class="badge rounded-pill text-bg-{{category.color}}">
+              {{category.name}}
+            </span>
+          </span>
+          <span>
+            <span>{{todo.date | dateFormat}}</span>
+            <span class="time">{{todo.time}}</span>
+            <button class="custom_button footer_button" (click)="onEdit(todo)"><fa-icon [icon]="faPenToSquare" size="lg"></fa-icon></button>
+            <button class="custom_button footer_button" (click)="onDelete(todo.id)"><fa-icon [icon]="faTrashCan" size="lg"></fa-icon></button>
+          </span>
         </div>
       </div>
 
-<app-add-edit-todo [showAddEditModal]="showAddEditModal" [todo]="currentTodo" (onClose)="addEditOnClose($event)"></app-add-edit-todo>
-
-<!-- settings modal -->
-<span *ngIf="showSettingsModal">
-  <div class="modal fade show" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: block !important;">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Settings</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="settingsOnClose(false)"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="settingsOnClose(false)" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="settingsOnClose(true)">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal-backdrop fade show"></div>
-</span>
+      <app-add-edit-todo [showAddEditModal]="showAddEditModal" [todo]="currentTodo"
+        (onClose)="addEditOnClose($event)"></app-add-edit-todo>
 
     </div>
   </div>

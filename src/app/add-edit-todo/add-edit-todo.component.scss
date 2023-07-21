@@ -1,8 +1,29 @@
 #date {
-    display: block;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 #date .form-control{
     display: inline;
     width: 200px;
+}
+
+.form-check-input {
+    margin: 10px 5px;
+}
+
+label {
+    margin-bottom: 0;
+}
+
+input, textarea {
+    margin-bottom: 10px;
+}
+
+select {
+    margin-top: 20px;
+}
+
+.subtask_input {
+    margin-bottom: 0px;
 }

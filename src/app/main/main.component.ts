@@ -170,4 +170,20 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy{
     let date = new Date(dt * 1000);
     return date.toLocaleDateString("en-US", {weekday: 'short'});
   }
+
+  getWeatherImg(sky: string) {
+    switch (sky) {
+      case "Clear":
+        return "6.png";
+
+      case "Clouds":
+        return "1.png";
+
+      case "Rain":
+        return "3.png";
+
+      default:
+        return "1.png"
+    }
+  }
 }

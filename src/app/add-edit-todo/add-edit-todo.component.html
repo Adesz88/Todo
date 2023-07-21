@@ -14,9 +14,11 @@
               <label for="date" class="form-label">Date</label>
               <span id="date">
                 <input type="date" class="form-control" [formControl]="date">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                <span>
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                   (click)="onCheckClick()" [formControl]="checkbox">
-                <input type="time" id="time" class="form-control" [formControl]="time">
+                  <input type="time" id="time" class="form-control" [formControl]="time">
+                </span>
               </span>
               <label for="details" class="form-label">Details</label>
               <textarea class="form-control" id="details" rows="3" [formControl]="details"></textarea>
@@ -25,9 +27,11 @@
               <label for="subtasks" class="form-label">Subtasks</label>
               <span id="subtasks">
                 <div *ngFor="let control of subtasks.controls; index as i">
-                  <input type="text" class="form-control" [formControl]="subtasks.controls[i]">
+                  <input type="text" class="form-control subtask_input" [formControl]="subtasks.controls[i]">
                 </div>
-                <button type="button" class="custom_button" (click)="onNewSubtask()"><fa-icon [icon]="faCirclePlus" size="lg"></fa-icon></button>
+                <button type="button" class="custom_button" (click)="onNewSubtask()">
+                  <fa-icon class="add_icon" [icon]="faCirclePlus" size="lg"></fa-icon>
+                </button>
               </span>
 
               <!-- categories -->
