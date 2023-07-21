@@ -9,16 +9,58 @@ import { Subtask } from '../models/Subtask';
 export class TodoService {
   private readonly BUILT_IN_TODOS: Todo[] = [
     {
+      id: 1689678910523,
+      title: "Meeting with Fabio",
+      date: new Date("2023-07-19T00:00:00.000Z"),
+      time: "11:20",
+      details: "",
+      subtasks: [],
+      categories: [
+        {
+          name: "Work",
+          color: "info"
+        },
+        {
+          name: "Outdoor",
+          color: "success"
+        }
+      ],
+      completed: true
+    },
+    {
+      id: 1689678890941,
+      title: "Angular mini project",
+      date: new Date("2023-07-21T00:00:00.000Z"),
+      details: "",
+      time: "13:00",
+      subtasks: [],
+      categories: [
+        {
+          name: "Work",
+          color: "info"
+        },
+        {
+          name: "Indoor",
+          color: "secondary"
+        }
+      ],
+      completed: false
+    },
+    {
       id: 1689678890941,
       title: "Coffee with Olivia",
-      date: new Date("2023-07-18T18:14:50.941Z"),
+      date: new Date("2023-07-23T00:00:00.000Z"),
       details: "Cafe Frei at Balaton st.",
-      time: "21:30",
+      time: "16:00",
       subtasks: [],
       categories: [
         {
           name: "Personal",
           color: "warning"
+        },
+        {
+          name: "Outdoor",
+          color: "success"
         }
       ],
       completed: false
@@ -26,7 +68,7 @@ export class TodoService {
     {
       id: 1689678903073,
       title: "Buy ingredients for spaghetti bolognese",
-      date: new Date("2023-07-15T11:24:50.941Z"),
+      date: new Date("2023-07-22T00:00:00.000Z"),
       details: "",
       subtasks: [
         {
@@ -46,6 +88,10 @@ export class TodoService {
         {
           name: "Personal",
           color: "warning"
+        },
+        {
+          name: "Outdoor",
+          color: "success"
         }
       ],
       completed: false
@@ -53,13 +99,17 @@ export class TodoService {
     {
       id: 1689678910523,
       title: "Plant the flowers",
-      date: new Date("2023-07-12T16:40:50.941Z"),
+      date: new Date("2023-07-20T00:00:00.000Z"),
       details: "",
       subtasks: [],
       categories: [
         {
           name: "Personal",
           color: "warning"
+        },
+        {
+          name: "Outdoor",
+          color: "success"
         }
       ],
       completed: false

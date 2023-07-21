@@ -72,7 +72,9 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy{
     private weatherService: WeatherService) {
     let categories = categoryService.getAll();
     console.log(categories);
-    //todoService.addBuiltIn();
+    if (localStorage.getItem("todos") === null) {
+      todoService.addBuiltIn();
+    }
     this.todos = todoService.getAll(this.filter);
     console.log(this.todos);
   }
