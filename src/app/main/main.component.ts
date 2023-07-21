@@ -65,11 +65,6 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy{
         sky: "Clouds",
         dt: 0,
       },
-      {
-        temp: 0,
-        sky: "Clouds",
-        dt: 0,
-      }
     ]
   }
 
@@ -95,10 +90,10 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy{
       this.weather.current.temp = response.current.temp;
       this.weather.current.sky = response.current.weather[0].main;
 
-      for (let i = 0; i < 8; i++) {
-        this.weather.daily[i].temp = response.daily[i].temp.day;
-        this.weather.daily[i].sky = response.daily[i].weather[0].main;
-        this.weather.daily[i].dt = response.daily[i].dt;
+      for (let i = 1; i < 8; i++) {
+        this.weather.daily[i - 1].temp = response.daily[i].temp.day;
+        this.weather.daily[i - 1].sky = response.daily[i].weather[0].main;
+        this.weather.daily[i - 1].dt = response.daily[i].dt;
       }
     }, error: (error) => {
       console.log('err');
@@ -169,5 +164,10 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy{
     }    
 
     return false;
+  }
+
+  getDayName(dt: number) {
+    let date = new Date(dt * 1000);
+    return date.toLocaleDateString("en-US", {weekday: 'short'});
   }
 }

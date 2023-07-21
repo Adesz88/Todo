@@ -4,12 +4,15 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 
 app-sidebar {
-    display: inline-block;
+    
 }
 
 app-main {
-    display: inline-block;
+    width: 75vw;
 }

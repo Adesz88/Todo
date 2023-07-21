@@ -1,12 +1,26 @@
 <div class="card" id="main_content">
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">{{weather.current.temp + "C, " + weather.current.sky}}</p>
-      <p *ngFor="let forecast of weather.daily" class="card-text">{{forecast.dt + " " + forecast.temp + "C, " + forecast.sky}}</p>
-      <button type="button" class="btn btn-primary" (click)="onNew()">new</button>
+
+      <div class="header">
+        <span>
+          <h5 class="card-title">Budapest</h5>
+          <img src="/assets/5.png" style="width: 80px;">
+          <div class="card-text">{{weather.current.temp + "C, " + weather.current.sky}}</div>
+          <button type="button" class="btn btn-primary new_button" (click)="onNew()">New</button>
+        </span>
+        
+        <div class="weather_flex">
+          <span *ngFor="let forecast of weather.daily" class="card-text">
+            <div>{{getDayName(forecast.dt)}}</div>
+            <div>{{forecast.sky}}</div>
+            <div>{{forecast.temp + "C, "}}</div>
+          </span>
+        </div>
+      </div>
+      
       
       <!-- todos -->
-      <div class="card" *ngFor="let todo of todos">
+      <div class="card todo_card" *ngFor="let todo of todos">
         <div class="card-body">
           <input class="form-check-input flex-shrink-0" type="checkbox" (click)="onTodoCheck(todo)" [checked]="todo.completed">
           <h5 class="card-title todo_title">{{todo.title}}</h5>

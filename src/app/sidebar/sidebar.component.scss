@@ -1,11 +1,18 @@
 #sidebar {
-    width: 280px;
+    //width: 280px;
+    width: 20vw;
+    max-width: 280px;
     height: 95vh;
     background-color: rgba($color: #ffffff, $alpha: 0.8) !important;
+    border-radius: 10px;
 }
 
 .inactive {
     background-color: #ffffff;
+}
+
+.nav-item {
+    margin: 3px 0px;
 }
 
 .nav-link {

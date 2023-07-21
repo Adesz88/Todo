@@ -1,45 +1,19 @@
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" id="sidebar">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-      <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-      <span class="fs-4">Sidebar</span>
-    </a>
-    <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a class="nav-link active" (click)="onFilter.emit('all')">
+        <a class="nav-link {{getActive('all')}}" (click)="onClick('all')">
           All
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link inactive"> <!-- (click)="onFilter.emit('expired')"-->
-          Expired
-          <span class="badge rounded-pill text-bg-danger">2</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link inactive" (click)="onFilter.emit('completed')">
+        <a class="nav-link {{getActive('completed')}}" (click)="onClick('completed')">
           Completed
         </a>
       </li>
       <li *ngFor="let category of categories" class="nav-item">
-        <a class="nav-link inactive" (click)="onFilter.emit(category.name)">
-          {{category.name}}
-          <span class="badge rounded-pill text-bg-{{category.color}}">2</span>
+        <a class="nav-link {{getActive(category.name)}}" (click)="onClick(category.name)">
+          <span class="badge rounded-pill text-bg-{{category.color}}">{{category.name}}</span>
         </a>
       </li>
     </ul>
-    <hr>
-    <div class="dropdown">
-      <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-        <strong>mdo</strong>
-      </a>
-      <ul class="dropdown-menu text-small shadow">
-        <li><a class="dropdown-item" href="#">New project...</a></li>
-        <li><a class="dropdown-item" href="#">Settings</a></li>
-        <li><a class="dropdown-item" href="#">Profile</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Sign out</a></li>
-      </ul>
-    </div>
   </div>
