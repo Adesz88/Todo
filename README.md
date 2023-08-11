@@ -1,8 +1,8 @@
 # Todo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
-
 ![Todo screenshot](/Todo_screenshot.png "a title")
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
 
 ## Development server
 
